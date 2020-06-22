@@ -39,7 +39,6 @@ public class ChatServerSockets {
             ServerSocket servChat = new ServerSocket(5001);
             ServerSocket servSingUp = new ServerSocket(5002);
             ServerSocket servgetAllUser = new ServerSocket(5003);
-            ServerSocket servgetChat = new ServerSocket(5004);
 
             Thread thLogin = new Thread() {
                 @Override
@@ -260,7 +259,7 @@ public class ChatServerSockets {
                                             String user = set.getString(1);
                                             int port = set.getInt(2);
                                             String password = set.getString(3);
-                                            User p = new User(user,password,port);
+                                            User p = new User(user, password, port);
                                             arrperson.add(p);
                                         }
                                         con.close();
@@ -288,12 +287,6 @@ public class ChatServerSockets {
                 }
 
             };
-            
-            
-            
-            
-            
-            
 
             thSignUp.start();
             thChat.start();
