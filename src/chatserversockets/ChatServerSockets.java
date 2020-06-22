@@ -126,7 +126,7 @@ public class ChatServerSockets {
                                         ois = new ObjectInputStream(ss.getInputStream());
                                         Message me = (Message) ois.readObject();
                                         Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Chat", "Test", "Test");
-                                        PreparedStatement pr = con.prepareStatement("insert into message values (?,?,?,?)");
+                                        PreparedStatement pr = con.prepareStatement("insert into messages values (?,?,?,?)");
                                         pr.setString(1, me.getText());
                                         pr.setInt(2, me.getTo());
                                         pr.setInt(3, me.getFrom());
@@ -290,60 +290,6 @@ public class ChatServerSockets {
             };
             
             
-            Thread getChat = new Thread() {
-                @Override
-                public void run() {
-                    try {
-                        super.run();
-                        ExecutorService ex = Executors.newFixedThreadPool(5000);
-                        while (true) {
-                            Socket ss = servgetChat.accept();
-
-                            Thread thLoginUn = new Thread() {
-                                @Override
-                                public void run() {
-                                    ArrayList<User> arrperson = new ArrayList<User>();
-                                    try {
-                                        Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Chat", "Test", "Test");
-                                        PreparedStatement pr2 = con.prepareStatement("Select * from MESSAGES order by number DESC WHERE TOUSER = ? AND FROMUSER = ?");
-                                        ResultSet set = pr2.executeQuery();
-                                        ArrayList<Message> us = new ArrayList<>();
-                                        while(set.next()){
-                                            us.add(new Message(set.getString("TEXT"), set.getInt("TOUSER"), set.getInt("FROMUSER"), set.getString("DATE")));
-                                        }
-                                        
-                                        PreparedStatement pr = con.prepareStatement("Select * from MESSAGES order by number DESC WHERE TOUSER = ? AND FROMUSER = ?");
-                                        ResultSet set2 = pr.executeQuery();
-                                        while(set2.next()){
-                                            us.add(new Message(set.getString("TEXT"), set.getInt("TOUSER"), set.getInt("FROMUSER"), set.getString("DATE")));
-                                        }
-                                        
-                                        con.close();
-                                        ObjectOutputStream oos = new ObjectOutputStream(ss.getOutputStream());
-                                        oos.writeObject(us);
-                                        oos.flush();
-                                        oos.close();
-
-                                    } catch (IOException ex1) {
-                                        Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
-                                    } catch (SQLException ex1) {
-                                        Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
-                                    }
-
-                                }
-
-                            };
-
-                            ex.execute(thLoginUn);
-                        }
-
-                    } catch (IOException ex1) {
-                        Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
-                    }
-                }
-
-            };
-            
             
             
             
@@ -353,7 +299,6 @@ public class ChatServerSockets {
             thChat.start();
             thLogin.start();
             getAllUser.start();
-            getChat.start();
 
         } catch (IOException ex) {
             Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex);
