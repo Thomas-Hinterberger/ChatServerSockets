@@ -125,7 +125,7 @@ public class ChatServerSockets {
                                         ois = new ObjectInputStream(ss.getInputStream());
                                         Message me = (Message) ois.readObject();
                                         Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Chat", "Test", "Test");
-                                        PreparedStatement pr = con.prepareStatement("insert into messages values (?,?,?,?)");
+                                        PreparedStatement pr = con.prepareStatement("insert into message values (?,?,?,?)");
                                         pr.setString(1, me.getText());
                                         pr.setInt(2, me.getTo());
                                         pr.setInt(3, me.getFrom());

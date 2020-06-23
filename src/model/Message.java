@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import javafx.scene.image.Image;
 
 /**
  *
@@ -16,6 +17,7 @@ public class Message implements Serializable{
     int to;
     int from;
     String date;
+    byte[] i;
 
     public Message( String text, int to, int from, String date) {
         this.text = text;
@@ -23,6 +25,18 @@ public class Message implements Serializable{
         this.from = from;
         this.date = date;
     }
+
+    public Message(String text, int to, int from, String date, byte[] i) {
+        this.text = text;
+        this.to = to;
+        this.from = from;
+        this.date = date;
+        this.i = i;
+    }
+
+    
+    
+    
 
     public Message() {
     }
@@ -65,6 +79,16 @@ public class Message implements Serializable{
     public String toString() {
         return "Message{" + "text=" + text + ", to=" + to + ", from=" + from + ", date=" + date + '}';
     }
+
+    public byte[] getI() {
+        return i;
+    }
+
+    public void setI(byte[] i) {
+        this.i = i;
+    }
+
+    
 
     
     
