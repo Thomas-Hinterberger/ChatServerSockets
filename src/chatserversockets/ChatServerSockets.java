@@ -124,20 +124,11 @@ public class ChatServerSockets {
                                         super.run();
                                         ois = new ObjectInputStream(ss.getInputStream());
                                         Message me = (Message) ois.readObject();
-                                        Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/Chat", "Test", "Test");
-                                        PreparedStatement pr = con.prepareStatement("insert into message values (?,?,?,?)");
-                                        pr.setString(1, me.getText());
-                                        pr.setInt(2, me.getTo());
-                                        pr.setInt(3, me.getFrom());
-                                        pr.setString(4, me.getDate());
-                                        pr.executeUpdate();
                                         Socket s = new Socket("localhost", me.getTo());
                                         ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
                                         oos.writeObject(me);
                                         oos.close();
                                     } catch (IOException ex1) {
-                                        Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
-                                    } catch (SQLException ex1) {
                                         Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
                                     } catch (ClassNotFoundException ex1) {
                                         Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);

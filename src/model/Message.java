@@ -12,19 +12,13 @@ import javafx.scene.image.Image;
  *
  * @author agaub
  */
-public class Message implements Serializable{
+public class Message implements Serializable {
+
     String text;
     int to;
     int from;
     String date;
     byte[] i;
-
-    public Message( String text, int to, int from, String date) {
-        this.text = text;
-        this.to = to;
-        this.from = from;
-        this.date = date;
-    }
 
     public Message(String text, int to, int from, String date, byte[] i) {
         this.text = text;
@@ -34,14 +28,8 @@ public class Message implements Serializable{
         this.i = i;
     }
 
-    
-    
-    
-
     public Message() {
     }
-
-    
 
     public String getText() {
         return text;
@@ -88,9 +76,4 @@ public class Message implements Serializable{
         this.i = i;
     }
 
-    
-
-    
-    
-           
 }
