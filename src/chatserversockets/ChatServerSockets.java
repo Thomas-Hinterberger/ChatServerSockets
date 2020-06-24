@@ -73,6 +73,7 @@ public class ChatServerSockets {
                                             ObjectOutputStream oos = new ObjectOutputStream(ss.getOutputStream());
                                             oos.writeObject(null);
                                         }
+                                        ois.close();
 
                                     } catch (SQLException ex1) {
                                         ObjectOutputStream oos = null;
@@ -83,6 +84,7 @@ public class ChatServerSockets {
                                             Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex2);
                                         } finally {
                                             try {
+                                                oos.flush();
                                                 oos.close();
                                             } catch (IOException ex2) {
                                                 Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex2);
@@ -127,6 +129,7 @@ public class ChatServerSockets {
                                         Socket s = new Socket("localhost", me.getTo());
                                         ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
                                         oos.writeObject(me);
+                                        oos.flush();
                                         oos.close();
                                     } catch (IOException ex1) {
                                         Logger.getLogger(ChatServerSockets.class.getName()).log(Level.SEVERE, null, ex1);
@@ -183,6 +186,8 @@ public class ChatServerSockets {
                                         pr.executeUpdate();
                                         ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
                                         oos.writeObject(us);
+                                        ois.close();
+                                        oos.flush();
                                         oos.close();
 
                                     } catch (IOException ex) {
